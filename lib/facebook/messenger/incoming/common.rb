@@ -10,7 +10,7 @@ module Facebook
         end
 
         def sender
-          @messaging['sender']
+          { 'id' => @messaging['sender']['id'] }
         end
 
         def recipient
