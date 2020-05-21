@@ -31,12 +31,14 @@ module Facebook
         #
         # Returns a String describing the message ID if the message was sent,
         # or raises an exception if it was not.
-        def deliver(message, access_token:)
+        def deliver(message, access_token:, appsecret_proof:, appsecret_time:)
           response = post '/messages',
                           body: JSON.dump(message),
                           format: :json,
                           query: {
-                            access_token: access_token
+                            access_token: access_token,
+                            appsecret_proof: appsecret_proof,
+                            appsecret_time: appsecret_time
                           }
 
           Facebook::Messenger::Bot::ErrorParser.raise_errors_from(response)
