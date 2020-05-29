@@ -58,7 +58,7 @@ module Facebook
       #
       # Returns nothing.
       def check_integrity
-        return unless app_secret_for(parsed_body['entry'][0]['id'])
+        return unless parsed_body['entry'][0]['id'].present?
 
         unless signature.start_with?('sha1='.freeze)
           $stderr.puts(X_HUB_SIGNATURE_MISSING_WARNING)
@@ -96,18 +96,22 @@ module Facebook
         facebook_page_id = content_json[:entry][0][:id]
 
         OpenSSL::HMAC.hexdigest('sha1'.freeze,
-                                app_secret_for(facebook_page_id),
+                                app_secret,
                                 content)
       end
 
       # Returns a String describing the bot's configured app secret.
-      def app_secret_for(facebook_page_id)
-        Facebook::Messenger.config.provider.app_secret_for(facebook_page_id)
+      def app_secret
+        ENV['FB_APP_SECRET']
+      end
+
+      def verify_token
+        ENV['FB_VERIFY_TOKEN']
       end
 
       # Checks whether a verify token is valid.
       def valid_verify_token?(token)
-        Facebook::Messenger.config.provider.valid_verify_token?(token)
+        verify_token.present? && verify_token == token
       end
 
       # Returns a String describing the request body.

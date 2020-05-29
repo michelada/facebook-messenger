@@ -20,11 +20,10 @@ describe Facebook::Messenger::Configuration::Providers::Environment do
     end
   end
 
-  describe '.app_secret_for' do
-    let(:page_id) { '123' }
+  describe '.app_secret' do
     let(:app_secret) { 'ABC' }
 
-    subject { described_class.new.app_secret_for(page_id) }
+    subject { described_class.new.app_secret }
     before { ENV['APP_SECRET'] = app_secret }
 
     it { is_expected.to eq(app_secret) }

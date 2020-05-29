@@ -29,7 +29,7 @@ module Facebook
         Bot.deliver({
                       recipient: sender,
                       message: { text: text }
-                    }, access_token: ENV['ACCESS_TOKEN'])
+                    }, access_token: ENV['ACCESS_TOKEN'], appsecret_proof: nil, appsecret_time: nil)
       end
     end
   end

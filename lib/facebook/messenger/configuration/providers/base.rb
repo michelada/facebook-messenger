@@ -9,7 +9,11 @@ module Facebook
             raise NotImplementedError
           end
 
-          def app_secret_for(*)
+          def app_secret
+            raise NotImplementedError
+          end
+
+          def verify_token
             raise NotImplementedError
           end
 
